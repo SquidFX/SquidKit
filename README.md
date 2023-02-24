@@ -1,2 +1,2 @@
-# SquidKit
-C++ Software Development Framework.
+# File
+
