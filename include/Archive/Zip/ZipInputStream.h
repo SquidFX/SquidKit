@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ZipStream.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ZipInputStream = Poco::Zip::ZipInputStream;
 }

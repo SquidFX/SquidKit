@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::RegExp {
+namespace SquidKit::RegExp {
   using Match = ;
 }

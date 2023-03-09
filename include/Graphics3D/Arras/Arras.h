@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Graphics3D::Arras {
+namespace SquidKit::Graphics3D::Arras {
   using Arras = ;
 }

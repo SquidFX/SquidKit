@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Decompress.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Decompress = Poco::Zip::Decompress;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/LRUCache.h>
 
-export namespace SquidKit::Cache {
-  using LRUCache = ;
+namespace SquidKit::Cache {
+  using LRUCache = Poco::LRUCache;
 }

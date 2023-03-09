@@ -31,6 +31,6 @@
 
 #include <Poco/Util/Application.h>
 
-export namespace SquidKit::Application {
+namespace SquidKit::Application {
   using Application = Poco::Util::Application;
 }

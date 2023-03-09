@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/PropertyFileConfiguration.h>
 
-export namespace SquidKit::Config {
-  using PropertyFileConfiguration = ;
+namespace SquidKit::Config {
+  using PropertyFileConfiguration = Poco::Util::PropertyFileConfiguration;
 }

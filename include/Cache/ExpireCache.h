@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/ExpireCache.h>
 
-export namespace SquidKit::Cache {
-  using ExpireCache = ;
+namespace SquidKit::Cache {
+  using ExpireCache = Poco::ExpireCache;
 }

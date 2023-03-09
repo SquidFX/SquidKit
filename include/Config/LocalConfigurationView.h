@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/LocalConfigurationView.h>
 
-export namespace SquidKit::Config {
-  using LocalConfigurationView = ;
+namespace SquidKit::Config {
+  using LocalConfigurationView = Poco::Util::LocalConfigurationView;
 }

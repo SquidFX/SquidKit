@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/XMLConfiguration.h>
 
-export namespace SquidKit::Config {
-  using XMLConfiguration = ;
+namespace SquidKit::Config {
+  using XMLConfiguration = Poco::Util::XMLConfiguration;
 }

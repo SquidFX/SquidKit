@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::ActiveRecord {
+namespace SquidKit::ActiveRecord {
   using StatementPlaceholderProvider = ;
 }

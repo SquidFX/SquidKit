@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ZipLocalFileHeader.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ZipLocalFileHeader = Poco::Zip::ZipLocalFileHeader;
 }

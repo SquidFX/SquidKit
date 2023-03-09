@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.24)
-project(Vadax)
+project(SquidKit)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_LIBRARY_ARCHITECTURE "x86_64-linux-gnu")
+
 include(ExternalProject)
 
 # Investigating
@@ -17,7 +19,7 @@ include(ExternalProject)
 # Web               | cef3
 # Markup            | yaml, libxml, expat
 # Configuration     | toml
-# Audio             | libflac, libogg, libopis, libvorbis, ...
+# Audio             | libflac, libogg, libopis, libvorbis, clap sdk...
 # Graphics3D        | Physx, opensubd, openvdb, ...
 # https://github.com/NVIDIA-Omniverse/PhysX
 
@@ -28,7 +30,7 @@ include(ExternalProject)
 
 # Tools
 # --------------------
-option(C_Compiler "Build LLVM Compiler Collection" ON)
+option(C_Compiler "Build LLVM Compiler Collection" OFF)
 if(C_Compiler)
 # LLVM is a collection of modular and reusable compiler and toolchain technologies, written in C++ and 
 # designed for a wide range of programming languages. 
@@ -42,7 +44,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(Build_Generator "Build CMake" ON)
+option(Build_Generator "Build CMake" OFF)
 if(Build_Generator)
 # CMake is a cross-platform build system generator that allows developers to specify the build process for 
 # their C++ projects in a platform-independent way. It uses a simple scripting language called CMake Language 
@@ -57,7 +59,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(Build_System "Build Ninja Build System" ON)
+option(Build_System "Build Ninja Build System" OFF)
 if(Build_System)
 # Ninja is a build system that is designed to be fast, flexible, and easy to use. It is commonly used in software 
 # development to automate the building of software projects, especially large projects with many dependencies.
@@ -99,7 +101,7 @@ endif()
 
 # Audio Module
 # --------------------
-option(BUILD_RTAUDIO "Audio | Advance Realtime Audio Support) " ON)
+option(BUILD_RTAUDIO "Audio | Advance Realtime Audio Support) " OFF)
 if(BUILD_RTAUDIO)
 # RtAudio is a C++ library that provides a cross-platform interface for 
 # real-time audio input and output. It supports multiple audio API backends, 
@@ -115,7 +117,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_STK "Audio | Synthesis Toolkit Support) " ON)
+option(BUILD_STK "Audio | Synthesis Toolkit Support) " OFF)
 if(BUILD_STK)
 # STK (Synthesis ToolKit in C++) is a C++ library designed for creating 
 # and manipulating digital audio signals. It provides a wide range of 
@@ -131,7 +133,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_RTMIDI "Audio | Midi Support) " ON)
+option(BUILD_RTMIDI "Audio | Midi Support) " OFF)
 if(BUILD_RTMIDI)
 # RtMidi is a C++ library that provides a simple and cross-platform interface 
 # for working with MIDI (Musical Instrument Digital Interface) devices. It allows 
@@ -147,7 +149,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_LABSOUND "Audio | Graph-Based Audio Engine) " ON)
+option(BUILD_LABSOUND "Audio | Graph-Based Audio Engine) " OFF)
 if(BUILD_LABSOUND)
 # LabSound is an open-source C++ library for audio processing that was developed by 
 # Google and is now maintained by a community of contributors on GitHub. It provides 
@@ -168,7 +170,7 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_LIBNYQUIST "Audio | Graph-Based Audio Engine) " ON)
+option(BUILD_LIBNYQUIST "Audio | Graph-Based Audio Engine) " OFF)
 if(BUILD_LIBNYQUIST)
 # Libnyquist is an open-source C++ library for audio processing that was developed by 
 # Google and is now maintained by a community of contributors on GitHub. It provides 
@@ -189,7 +191,7 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_FLAC "Audio | Flac Audio Codec) " ON)
+option(BUILD_FLAC "Audio | Flac Audio Codec) " OFF)
 if(BUILD_FLAC)
 # FLAC is a software library that provides an API for encoding and decoding audio data in 
 # the FLAC (Free Lossless Audio Codec) format. FLAC is an open-source lossless audio compression 
@@ -205,7 +207,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_VORBIS "Audio | Vorbis Audio Codec) " ON)
+option(BUILD_VORBIS "Audio | Vorbis Audio Codec) " OFF)
 if(BUILD_VORBIS)
 # Vorbis is an open-source audio compression format that is designed to provide high-quality, 
 # low-latency audio compression at a low bit rate. It was created as an alternative to other 
@@ -221,7 +223,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_OPUS "Audio | Opus Audio Codec) " ON)
+option(BUILD_OPUS "Audio | Opus Audio Codec) " OFF)
 if(BUILD_OPUS)
 # Opus is a totally open, royalty-free, highly versatile audio codec. Opus is unmatched for 
 # interactive speech and music transmission over the Internet, but is also intended for storage 
@@ -240,7 +242,7 @@ endif()
 
 #Cloud
 # --------------------
-option(BUILD_AWS "Cloud Frameworks | Amazon AWS SDK) " ON)
+option(BUILD_AWS "Cloud Frameworks | Amazon AWS SDK) " OFF)
 if(BUILD_AWS)
 # AWS SDK for C++ is a C++ software development kit that provides a modern and streamlined 
 # interface for developers to interact with Amazon Web Services (AWS) services, such as 
@@ -255,7 +257,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_AZURE "Cloud Frameworks | Microsoft Azure SDK) " ON)
+option(BUILD_AZURE "Cloud Frameworks | Microsoft Azure SDK) " OFF)
 if(BUILD_AZURE)
 # Azure SDK for C++ is a C++ library that provides a set of APIs for accessing and 
 # interacting with various Azure services. It includes modules for working with Azure 
@@ -270,7 +272,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_GOOGLE "Cloud Frameworks | Google Cloud SDK) " ON)
+option(BUILD_GOOGLE "Cloud Frameworks | Google Cloud SDK) " OFF)
 if(BUILD_GOOGLE)
 # The Google Cloud SDK a set of tools and libraries that enable developers to manage and 
 # deploy their applications on GCP. With the Google Cloud SDK, developers can interact with 
@@ -331,13 +333,15 @@ ExternalProject_Add(
     -DENABLE_REDIS=OFF 
     -DENABLE_SEVENZIP=OFF 
     -DENABLE_TESTS=OFF 
-    -DENABLE_UTIL=OFF 
+    -DENABLE_UTIL=ON 
     -DENABLE_XML=OFF 
-    -DENABLE_ZIP=OFF
+    -DENABLE_ZIP=ON
+    -DBUILD_SHARED_LIBS=OFF  # Disables shared libraries and enables static libraries
+    -DBUILD_STATIC=ON 
 )
 endif()
 
-option(BUILD_BOOST "Core | Advance C++ Framework) " ON)
+option(BUILD_BOOST "Core | Advance C++ Framework) " OFF)
 if(BUILD_BOOST)
 # Boost is a widely-used set of C++ libraries that provides a broad range of functionality for 
 # developing high-quality software applications. The Boost libraries cover a wide range of areas 
@@ -352,7 +356,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_FMT "Core | Formating Library) " ON)
+option(BUILD_FMT "Core | Formating Library) " OFF)
 if(BUILD_FMT)
 # 
 # License: MIT
@@ -365,7 +369,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_CLI "Core | Commandline Interface Library) " ON)
+option(BUILD_CLI "Core | Commandline Interface Library) " OFF)
 if(BUILD_CLI)
 # A cross-platform header only C++14 library for interactive command line interfaces (Cisco style)
 # License: Boost Software License 1.0
@@ -384,7 +388,7 @@ endif()
 
 # Parallel Programming
 # --------------------------
-option(BUILD_TASK "Parallel Programming | Parallel and Heterogeneous Task Programming System) " ON)
+option(BUILD_TASK "Parallel Programming | Parallel and Heterogeneous Task Programming System) " OFF)
 if(BUILD_TASK)
 # A General-purpose Parallel and Heterogeneous Task Programming System.
 # License: MIT
@@ -397,7 +401,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_THRUST "Parallel Programming | Parallel Algorithms Library Resembling the C++ STL) " ON)
+option(BUILD_THRUST "Parallel Programming | Parallel Algorithms Library Resembling the C++ STL) " OFF)
 if(BUILD_THRUST)
 # Thrust is a parallel algorithms library which resembles the C++ Standard Template Library (STL). 
 # Thrust’s high-level interface greatly enhances programmer productivity while enabling performance 
@@ -412,7 +416,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_ARRAYFIRE "Parallel Programming | General-Purpose Tensor Library) " ON)
+option(BUILD_ARRAYFIRE "Parallel Programming | General-Purpose Tensor Library) " OFF)
 if(BUILD_ARRAYFIRE)
 # ArrayFire is a general-purpose tensor library that simplifies the process of software development 
 # for the parallel architectures found in CPUs, GPUs, and other hardware acceleration devices. The 
@@ -496,7 +500,7 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_LEVELDB "Database | LevelDB Database) " ON)
+option(BUILD_LEVELDB "Database | LevelDB Database) " OFF)
 if(BUILD_LEVELDB)
 # LevelDB is an open-source, key-value store database that was developed by Google. It is 
 # designed to be fast, efficient, and scalable, and is widely used in many different types 
@@ -566,7 +570,7 @@ endif()
 
 # Graphics2D
 # --------------------
-option(BUILD_OIIO "Graphics2D | Advance Image Support) " ON)
+option(BUILD_OIIO "Graphics2D | Advance Image Support) " OFF)
 if(BUILD_OIIO)
 # OpenImageIO is a C++ library that provides a simple and powerful interface for 
 # reading and writing image files. It is designed to support a wide range of image 
@@ -582,7 +586,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_BOX2D "Graphics2D | 2D Physics Support) " ON)
+option(BUILD_BOX2D "Graphics2D | 2D Physics Support) " OFF)
 if(BUILD_BOX2D)
 # Box2D is a C++ physics engine library that is designed to simulate 2D rigid-body 
 # physics. It is commonly used in video games and other interactive applications to 
@@ -598,7 +602,7 @@ ExternalProject_Add(
 endif()
 
 
-option(BUILD_YOGA "Graphics2D | Flexbox, Grid, ... Layout Library) " ON)
+option(BUILD_YOGA "Graphics2D | Flexbox, Grid, ... Layout Library) " OFF)
 if(BUILD_YOGA)
 # 
 # License: MIT
@@ -615,7 +619,7 @@ endif()
 
 # Graphics3D
 # --------------------
-option(BUILD_VSG "Gui | Window Management, Input Handeling, 2D & 3D Graphics) " ON)
+option(BUILD_VSG "Gui | Window Management, Input Handeling, 2D & 3D Graphics) " OFF)
 if(BUILD_VSG)
 # 
 # License: MIT
@@ -628,7 +632,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_PCL "Graphics3D | Point Cloud Library) " ON)
+option(BUILD_PCL "Graphics3D | Point Cloud Library) " OFF)
 if(BUILD_PCL)
 # 
 # License: BSD
@@ -644,7 +648,7 @@ endif()
 
 # Maps & Navigation
 # --------------------
-option(BUILD_LIBOSMIUM "Maps | Basic OpenStreetMap Support) " ON)
+option(BUILD_LIBOSMIUM "Maps | Basic OpenStreetMap Support) " OFF)
 if(BUILD_LIBOSMIUM)
 # Libosmium is a C++ library for working with OpenStreetMap data. 
 # It provides tools for reading, writing, and manipulating OSM data 
@@ -659,7 +663,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_GDAL "Maps | Advance Vector & Raster Geospatial Support) " ON)
+option(BUILD_GDAL "Maps | Advance Vector & Raster Geospatial Support) " OFF)
 if(BUILD_GDAL)
 # GDAL is a C++ library for reading, writing, and manipulating raster 
 # and vector geospatial data. It supports a wide variety of file formats 
@@ -675,7 +679,7 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_OSRM "Maps | Advance OpenStreetMap Routing Support) " ON)
+option(BUILD_OSRM "Maps | Advance OpenStreetMap Routing Support) " OFF)
 if(BUILD_OSRM)
 # OSRM is a C++ library for routing on OpenStreetMap data. It provides tools 
 # for calculating shortest paths and travel times between points on a map, as 

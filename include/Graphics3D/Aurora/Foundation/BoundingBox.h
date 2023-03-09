@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Crypto {
-  using Crypto = ;
+namespace SquidKit::Graphics3D {
+  using Camera = ;
 }

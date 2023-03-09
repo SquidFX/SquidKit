@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/LayeredConfiguration.h>
 
-export namespace SquidKit::Config {
-  using LayeredConfiguration = ;
+namespace SquidKit::Config {
+  using LayeredConfiguration = Poco::Util::LayeredConfiguration;
 }

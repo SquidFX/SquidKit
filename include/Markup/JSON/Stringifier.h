@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::JSON {
+namespace SquidKit::JSON {
   using Stringifier = ;
 }

@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Events {
+namespace SquidKit::Events {
   using PriorityStrategy = ;
 }

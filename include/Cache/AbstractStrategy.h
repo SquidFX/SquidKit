@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AbstractStrategy.h>
 
-export namespace SquidKit::Cache {
-  using AbstractStrategy = ;
+namespace SquidKit::Cache {
+  using AbstractStrategy = Poco::AbstractStrategy;
 }

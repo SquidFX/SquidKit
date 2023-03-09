@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::XML {
+namespace SquidKit::XML {
   using XMLStreamParser = ;
 }

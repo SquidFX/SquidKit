@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Hashing {
+namespace SquidKit::Hashing {
   using HashTable = ;
 }

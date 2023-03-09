@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/AutoDetectStream.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using AutoDetectInputStream = Poco::Zip::AutoDetectStream;
 }

@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Tasks {
+namespace SquidKit::Tasks {
   using TaskFailedNotification = ;
 }

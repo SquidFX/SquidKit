@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::ODBC {
+namespace SquidKit::ODBC {
   using TypeInfo = ;
 }

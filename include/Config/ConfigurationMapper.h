@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/ConfigurationMapper.h>
 
-export namespace SquidKit::Config {
-  using ConfigurationMapper = ;
+namespace SquidKit::Config {
+  using ConfigurationMapper = Poco::Util::ConfigurationMapper;
 }

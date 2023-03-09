@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Redis {
+namespace SquidKit::Redis {
   using Client = ;
 }

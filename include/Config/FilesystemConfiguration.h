@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/FilesystemConfiguration.h>
 
-export namespace SquidKit::Config {
-  using FilesystemConfiguration = ;
+namespace SquidKit::Config {
+  using FilesystemConfiguration = Poco::Util::FilesystemConfiguration;
 }

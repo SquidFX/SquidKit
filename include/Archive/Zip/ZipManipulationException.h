@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ZipException.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ZipManipulationException = Poco::Zip::ZipManipulationException;
 }

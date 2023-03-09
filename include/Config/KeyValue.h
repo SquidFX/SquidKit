@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/AbstractConfiguration.h>
 
-export namespace SquidKit::Config {
-  using KeyValue = ;
+namespace SquidKit::Config {
+  using KeyValue = Poco::Util::AbstractConfiguration::KeyValue;
 }

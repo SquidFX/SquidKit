@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::URI {
+namespace SquidKit::URI {
   using URIRedirection = ;
 }

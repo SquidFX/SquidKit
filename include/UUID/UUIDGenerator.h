@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::UUID {
+namespace SquidKit::UUID {
   using UUIDGenerator = ;
 }

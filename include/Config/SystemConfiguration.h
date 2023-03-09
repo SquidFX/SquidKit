@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/SystemConfiguration.h>
 
-export namespace SquidKit::Config {
-  using SystemConfiguration = ;
+namespace SquidKit::Config {
+  using SystemConfiguration = Poco::Util::SystemConfiguration;
 }

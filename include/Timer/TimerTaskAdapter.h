@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Timer {
+namespace SquidKit::Timer {
   using TimerTaskAdapter = ;
 }

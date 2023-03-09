@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::SharedLibrary {
+namespace SquidKit::SharedLibrary {
   using MetaObject = ;
 }

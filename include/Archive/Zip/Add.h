@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Add.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Add = Poco::Zip::Add;
 }

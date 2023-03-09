@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Units {
+namespace SquidKit::Units {
   using CheckTermsEqual = ;
 }

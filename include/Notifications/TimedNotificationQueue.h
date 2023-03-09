@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Notifications {
+namespace SquidKit::Notifications {
   using TimedNotificationQueue = ;
 }

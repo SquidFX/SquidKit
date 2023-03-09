@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Cryptography {
+namespace SquidKit::Cryptography {
   using CryptoOutputStream = ;
 }

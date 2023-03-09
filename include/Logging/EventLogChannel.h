@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Logging {
+namespace SquidKit::Logging {
   using EventLogChannel = ;
 }

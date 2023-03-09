@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Replace.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Replace = Poco::Zip::Replace;
 }

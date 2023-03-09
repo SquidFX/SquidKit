@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::SQLite {
+namespace SquidKit::SQLite {
   using InvalidLibraryUseException = ;
 }

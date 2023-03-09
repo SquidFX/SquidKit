@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Options {
+namespace SquidKit::Options {
   using AmbiguousOptionException = ;
 }

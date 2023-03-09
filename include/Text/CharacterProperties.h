@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Text {
+namespace SquidKit::Text {
   using CharacterProperties = ;
 }

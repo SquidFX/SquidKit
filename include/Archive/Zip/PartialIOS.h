@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/PartialStream.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using PartialIOS = Poco::Zip::PartialIOS;
 }

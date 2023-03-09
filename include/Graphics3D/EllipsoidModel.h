@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Graphics3D {
+namespace SquidKit::Graphics3D {
   using EllipsoidModel = ;
 }

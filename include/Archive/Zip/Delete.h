@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Delete.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Delete = Poco::Zip::Delete;
 }

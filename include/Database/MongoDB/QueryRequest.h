@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::MongoDB {
+namespace SquidKit::MongoDB {
   using QueryRequest = ;
 }

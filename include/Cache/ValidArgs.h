@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/ValidArgs.h>
 
-export namespace SquidKit::Cache {
-  using ValidArgs = ;
+namespace SquidKit::Cache {
+  using ValidArgs = Poco::ValidArgs;
 }

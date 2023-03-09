@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Path.h>
 
-export namespace SquidKit::Filesystem {
-  using Path = ;
+namespace SquidKit::Filesystem {
+  using Path = Poco::Path;
 }

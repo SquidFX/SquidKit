@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Streams {
+namespace SquidKit::Streams {
   using StreamTokenizer = ;
 }

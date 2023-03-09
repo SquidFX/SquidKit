@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/LoggingConfigurator.h>
 
-export namespace SquidKit::Config {
-  using LoggingConfigurator = ;
+namespace SquidKit::Config {
+  using LoggingConfigurator = Poco::Util::LoggingConfigurator;
 }

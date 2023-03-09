@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Net {
+namespace SquidKit::Net {
   using SecureServerSocketImpl = ;
 }

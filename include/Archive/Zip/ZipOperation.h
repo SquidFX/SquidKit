@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ZipOperation.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ZipOperation = Poco::Zip::ZipOperation;
 }

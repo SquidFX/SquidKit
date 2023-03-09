@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Filesystem {
+namespace SquidKit::Filesystem {
   using ChildrenFirstTraverse = ;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/File.h>
 
-export namespace SquidKit::Filesystem {
-  using File = ;
+namespace SquidKit::Filesystem {
+  using File = Poco::File;
 }

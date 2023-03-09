@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Processes {
+namespace SquidKit::Processes {
   using PipeIOS = ;
 }

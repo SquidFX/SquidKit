@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Graphics2D {
+namespace SquidKit::Graphics2D {
   using IRect = ;
 }

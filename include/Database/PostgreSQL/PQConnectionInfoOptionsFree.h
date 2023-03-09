@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::PostgreSQL {
+namespace SquidKit::PostgreSQL {
   using PQConnectionInfoOptionsFree = ;
 }

@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::MySQL {
+namespace SquidKit::MySQL {
   using Connector = ;
 }

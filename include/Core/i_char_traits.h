@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Core {
+namespace SquidKit::Core {
   using i_char_traits = ;
 }

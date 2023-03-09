@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Database {
+namespace SquidKit::Database {
   using RowFilter = ;
 }

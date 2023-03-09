@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Impl {
+namespace SquidKit::Impl {
   using SocketAddressImpl = ;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Util/IniFileConfiguration.h>
 
-export namespace SquidKit::Config {
-  using IniFileConfiguration = ;
+namespace SquidKit::Config {
+  using IniFileConfiguration = Poco::Util::IniFileConfiguration;
 }

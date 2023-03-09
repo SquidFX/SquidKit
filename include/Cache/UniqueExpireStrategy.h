@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/UniqueExpireStrategy.h>
 
-export namespace SquidKit::Cache {
-  using UniqueExpireStrategy = ;
+namespace SquidKit::Cache {
+  using UniqueExpireStrategy = Poco::UniqueExpireStrategy;
 }

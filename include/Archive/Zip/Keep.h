@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Keep.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Keep = Poco::Zip::Keep;
 }

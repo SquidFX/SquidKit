@@ -31,6 +31,6 @@
 
 #include <Poco/Util/LoggingSubsystem.h>
 
-export namespace SquidKit::Application {
+namespace SquidKit::Application {
   using LoggingSubsystem = Poco::Util::LoggingSubsystem;
 }

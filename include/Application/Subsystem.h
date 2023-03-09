@@ -31,6 +31,6 @@
 
 #include <Poco/Util/Subsystem.h>
 
-export namespace SquidKit::Application {
+namespace SquidKit::Application {
   using Subsystem = Poco::Util::Subsystem;
 }

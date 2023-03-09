@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::LayoutEngine {
+namespace SquidKit::LayoutEngine {
   using Justify = ;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Exception.h>
 
-export namespace SquidKit::Core {
-  using ApplicationException = ;
+namespace SquidKit::Core {
+  using ApplicationException = Poco::ApplicationException;
 }

@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ParseCallback.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ParseCallback = Poco::Zip::ParseCallback;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/KeyValueArgs.h>
 
-export namespace SquidKit::Cache {
-  using KeyValueArgs = ;
+namespace SquidKit::Cache {
+  using KeyValueArgs = Poco::KeyValueArgs;
 }

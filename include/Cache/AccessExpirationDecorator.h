@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AccessExpirationDecorator.h>
 
-export namespace SquidKit::Cache {
-  using AccessExpirationDecorator = ;
+namespace SquidKit::Cache {
+  using AccessExpirationDecorator = Poco::AccessExpirationDecorator;
 }

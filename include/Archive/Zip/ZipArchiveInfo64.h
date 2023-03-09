@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/ZipArchiveInfo.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using ZipArchiveInfo64 = Poco::Zip::ZipArchiveInfo64;
 }

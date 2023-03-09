@@ -31,6 +31,6 @@
 
 #include <Poco/Zip/Rename.h>
 
-export namespace SquidKit::Archive::Zip {
+namespace SquidKit::Archive::Zip {
   using Rename = Poco::Zip::Rename;
 }

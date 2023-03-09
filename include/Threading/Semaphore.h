@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Threading {
+namespace SquidKit::Threading {
   using Semaphore = ;
 }

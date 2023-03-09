@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::Encoding {
+namespace SquidKit::Encoding {
   using Windows1256Encoding = ;
 }

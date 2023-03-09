@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/LRUStrategy.h>
 
-export namespace SquidKit::Cache {
-  using LRUStrategy = ;
+namespace SquidKit::Cache {
+  using LRUStrategy = Poco::LRUStrategy;
 }

@@ -31,6 +31,6 @@
 
 #include <>
 
-export namespace SquidKit::DateTime {
+namespace SquidKit::DateTime {
   using Timezone = ;
 }

@@ -27,58 +27,10 @@
   DAMAGE.
 */
 
-module;
+#pragma once
 
-#include <Poco/Zip/Add.h>
-#include <Poco/Zip/AutoDetectStream.h>
-#include <Poco/Zip/Compress.h>
-#include <Poco/Zip/Decompress.h>
-#include <Poco/Zip/Delete.h>
-#include <Poco/Zip/Keep.h>
-#include <Poco/Zip/ParseCallback.h>
-#include <Poco/Zip/PartialStream.h>
-#include <Poco/Zip/Rename.h>
+#include <>
 
-#include <Poco/Zip/Compress.h>
-#include <Poco/Zip/Compress.h>
-#include <Poco/Zip/Compress.h>
-
-
-export module Zip;
-
-export namespace SquidKit::Archive::Zip {
-  // Using statements for each file name
-  using Add = ;
-  using AutoDetectInputStream = ;
-  using AutoDetectIOS = ;
-  using AutoDetectStreamBuf = ;
-  using Compress = ;
-  using Decompress = ;
-  using Delete = ;
-  using Keep = ;
-  using ParseCallback = ;
-  using PartialInputStream = ;
-  using PartialIOS = ;
-  using PartialOutputStream = ;
-  using PartialStreamBuf = ;
-  using Rename = ;
-  using Replace = ;
-  using SkipCallback = ;
-  using ZipArchive = ;
-  using ZipArchiveInfo64 = ;
-  using ZipArchiveInfo = ;
-  using ZipCommon = ;
-  using ZipDataInfo64 = ;
-  using ZipDataInfo = ;
-  using ZipException = ;
-  using ZipFileInfo = ;
-  using ZipInputStream = ;
-  using ZipIOS = ;
-  using ZipLocalFileHeader = ;
-  using ZipManipulationException = ;
-  using ZipManipulator = ;
-  using ZipOperation = ;
-  using ZipOutputStream = ;
-  using ZipStreamBuf = ;
-  using ZipUtil = ;
+namespace SquidKit::Graphics3D {
+  using Camera = ;
 }
