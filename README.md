@@ -35,7 +35,7 @@ export namespace SquidKit::Filesystem {
 ***Example (Uses Poco C++)***
 ```c++
 // g++ -std=c++20 -fmodules-ts -o main main.cpp -L. -lSquidKitCore
-#include <iostream>
+import <iostream>;
 
 import DirectoryIterator;
 import Path;
@@ -67,6 +67,11 @@ ar x libPocoFoundation.a
 
 // Repack all the object files into the destination lib using the name of our choice
 ar rcs libSquidKitCore.a *.o
+
+// Gcc doesn't full support modules so we have to convert some of the std into modules like so.
+g++ -std=c++20 -fmodules-ts -xc++-system-header iostream
+g++ -std=c++20 -fmodules-ts -xc++-system-header string
+g++ -std=c++20 -fmodules-ts -xc++-system-header fstream
 
 // Compile our program using our modules and its library
 g++ -std=c++20 -fmodules-ts -o main main.cpp -L. -lSquidKitCore
