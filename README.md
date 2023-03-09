@@ -1,4 +1,4 @@
-# VadaxSDK
+# SquidKit
 
 
 The SquidKit is a comprehensive C++ software development toolkit for ARM & X86_64 designed to help developers with limited experance build high-performance and feature-rich applications. It offers a powerful and flexible 2D graphics engine for vector graphics rendering with high accuracy and quality, advanced text rendering capabilities for complex text layout and typography, support for a wide range of image formats and image manipulations, and GPU acceleration for high-performance graphics. The SDK is cross-platform, supporting a variety of operating systems, and includes a rich set of APIs for working with graphics and images.
