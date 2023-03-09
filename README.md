@@ -17,7 +17,7 @@ The SquidKit utilizes CMake and Ninja for its build system. These tools provide 
 
 The SquidKit employs various techniques to provide seamless integration with third-party libraries. One such technique is type aliasing, which is used extensively throughout the SDK. Additionally, the SDK employs wrapper classes in select cases, both of which are subsequently transformed into C++ modules.
 
-This approach provides the VadaxSDK with the flexibility to offer a diverse set of features and functionalities, all backed by a consistent API. 
+This approach provides the SquidKit with the flexibility to offer a diverse set of features and functionalities, all backed by a consistent API. 
 
 ***DirectoryIterator.cxx implementation***
 ```c++
