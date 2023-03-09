@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/ParseCallback.h>
 
-export namespace SquidKit::Zip {
-  using ParseCallback = ;
+export namespace SquidKit::Archive::Zip {
+  using ParseCallback = Poco::Zip::ParseCallback;
 }

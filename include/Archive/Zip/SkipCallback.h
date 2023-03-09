@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/SkipCallback.h>
 
-export namespace SquidKit::Zip {
-  using SkipCallback = ;
+export namespace SquidKit::Archive::Zip {
+  using SkipCallback = Poco::Zip::SkipCallback;
 }

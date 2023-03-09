@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/ZipLocalFileHeader.h>
 
-export namespace SquidKit::Zip {
-  using ZipLocalFileHeader = ;
+export namespace SquidKit::Archive::Zip {
+  using ZipLocalFileHeader = Poco::Zip::ZipLocalFileHeader;
 }

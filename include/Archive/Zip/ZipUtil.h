@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/ZipUtil.h>
 
-export namespace SquidKit::Zip {
-  using ZipUtil = ;
+export namespace SquidKit::Archive::Zip {
+  using ZipUtil = Poco::Zip::ZipUtil;
 }

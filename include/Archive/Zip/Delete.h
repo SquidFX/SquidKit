@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/Delete.h>
 
-export namespace SquidKit::Zip {
-  using Delete = ;
+export namespace SquidKit::Archive::Zip {
+  using Delete = Poco::Zip::Delete;
 }

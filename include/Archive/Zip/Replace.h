@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/Replace.h>
 
-export namespace SquidKit::Zip {
-  using Replace = ;
+export namespace SquidKit::Archive::Zip {
+  using Replace = Poco::Zip::Replace;
 }

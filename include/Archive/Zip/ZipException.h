@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/ZipException.h>
 
-export namespace SquidKit::Zip {
-  using ZipException = ;
+export namespace SquidKit::Archive::Zip {
+  using ZipException = Poco::Zip::ZipException;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/Rename.h>
 
-export namespace SquidKit::Zip {
-  using Rename = ;
+export namespace SquidKit::Archive::Zip {
+  using Rename = Poco::Zip::Rename;
 }

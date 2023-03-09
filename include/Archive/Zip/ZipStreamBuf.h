@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Zip/ZipStream.h>
 
-export namespace SquidKit::Zip {
-  using ZipStreamBuf = ;
+export namespace SquidKit::Archive::Zip {
+  using ZipStreamBuf = Poco::Zip::ZipStreamBuf;
 }
