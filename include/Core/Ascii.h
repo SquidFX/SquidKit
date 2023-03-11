@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Ascii.h>
 
 namespace SquidKit::Core {
-  using Ascii = ;
+  using Ascii = Poco::Ascii;
 }

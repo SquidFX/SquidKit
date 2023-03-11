@@ -29,8 +29,14 @@
 
 #pragma once
 
-#include <>
+#include <Poco/DirectoryIterator.h>
 
 namespace SquidKit::Filesystem {
-  using DirectoryIterator = ;
-}
+
+   class DirectoryIterator : public Poco::DirectoryIterator {
+   public:
+      using Poco::DirectoryIterator::DirectoryIterator;
+   };
+
+} // namespace SquidKit::Filesystem
+

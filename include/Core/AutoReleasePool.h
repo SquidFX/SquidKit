@@ -29,8 +29,9 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AutoReleasePool.h>
 
 namespace SquidKit::Core {
-  using AutoReleasePool = ;
+   template <typename T>
+   using AutoReleasePool = Poco::AutoReleasePool<T>;
 }

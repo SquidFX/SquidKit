@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Bugcheck.h>
 
 namespace SquidKit::Core {
-  using Bugcheck = ;
+  using Bugcheck = Poco::Bugcheck;
 }

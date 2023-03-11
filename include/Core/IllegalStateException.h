@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Exception.h>
 
 namespace SquidKit::Core {
-  using IllegalStateException = ;
+  using IllegalStateException = Poco::IllegalStateException;
 }

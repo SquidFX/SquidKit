@@ -32,5 +32,5 @@
 #include <>
 
 namespace SquidKit::Core {
-  using ByteOrder = ;
+  using ByteOrder = Poco::ByteOrder;
 }

@@ -32,5 +32,10 @@
 #include <Poco/Path.h>
 
 namespace SquidKit::Filesystem {
-  using Path = Poco::Path;
-}
+
+   class Path : public Poco::Path {
+   public:
+      using Poco::Path::Path;
+   };
+
+} // namespace SquidKit::Filesystem

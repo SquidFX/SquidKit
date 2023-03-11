@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AtomicCounter.h>
 
 namespace SquidKit::Core {
-  using AtomicCounter = ;
+  using AtomicCounter = Poco::AtomicCounter;
 }

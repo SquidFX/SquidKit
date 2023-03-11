@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/FIFOBuffer.h>
 
 namespace SquidKit::Core {
-  using BasicFIFOBuffer = ;
+  using BasicFIFOBuffer = Poco::BasicFIFOBuffer;
 }

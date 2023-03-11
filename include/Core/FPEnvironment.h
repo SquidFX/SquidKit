@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/FPEnvironment.h>
 
 namespace SquidKit::Core {
-  using FPEnvironment = ;
+  using FPEnvironment = Poco::FPEnvironment;
 }

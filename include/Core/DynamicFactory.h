@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/DynamicFactory.h>
 
 namespace SquidKit::Core {
-  using DynamicFactory = ;
+  using DynamicFactory = Poco::DynamicFactory;
 }

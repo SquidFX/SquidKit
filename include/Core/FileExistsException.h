@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Exception.h>
 
 namespace SquidKit::Core {
-  using FileExistsException = ;
+  using FileExistsException = Poco::FileExistsException;
 }

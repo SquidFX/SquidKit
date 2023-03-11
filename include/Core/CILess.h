@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/String.h>
 
 namespace SquidKit::Core {
-  using CILess = ;
+  using CILess = Poco::CILess;
 }

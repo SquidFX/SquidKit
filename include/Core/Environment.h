@@ -29,8 +29,13 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Environment.h>
 
 namespace SquidKit::Core {
-  using Environment = ;
-}
+
+   class Environment : public Poco::Environment {
+   public:
+      using Poco::Environment::Environment;
+   };
+
+} // namespace SquidKit::Filesystem

@@ -29,8 +29,9 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AutoPtr.h>
 
 namespace SquidKit::Core {
-  using AutoPtr = ;
+   template <typename T>
+   using AutoPtr = Poco::AutoPtr<T>;
 }

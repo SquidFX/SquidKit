@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Checksum.h>
 
 namespace SquidKit::Core {
-  using Checksum = ;
+  using Checksum = Poco::Checksum;
 }

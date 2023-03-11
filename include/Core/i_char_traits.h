@@ -29,8 +29,9 @@
 
 #pragma once
 
-#include <>
+#include <Poco/String.h>
 
 namespace SquidKit::Core {
-  using i_char_traits = ;
+  template <typename charT>
+  using i_char_trait = std::char_traits<charT>;
 }

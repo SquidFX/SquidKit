@@ -1,12 +1,12 @@
 // g++ example3.cpp -o example3 -I../../include -L../../thirdparty/poco/build/lib  -lPocoFoundation -lPocoUtil
 
 #include <string>
-#include "Config/XMLConfiguration.h"
 #include <iostream>
-#include <Poco/AutoPtr.h>
+#include "Config/XMLConfiguration.h"
+#include "Core/AutoPtr.h"
 
 using namespace SquidKit::Config;
-using Poco::AutoPtr;
+using namespace SquidKit::Core;
 
 int main()
 {

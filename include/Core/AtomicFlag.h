@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/AtomicFlag.h>
 
 namespace SquidKit::Core {
-  using AtomicFlag = ;
+  using AtomicFlag = Poco::AtomicFlag;
 }

@@ -8,8 +8,8 @@
 #include <iostream>
 #include <fstream>
 
-using namespace SquidKit::Archive;
-using namespace SquidKit;
+using namespace SquidKit::Archive::Zip;
+using namespace SquidKit::Filesystem;
 
 
 int main(int argc, char **argv)
@@ -22,14 +22,14 @@ int main(int argc, char **argv)
   }
 
   std::ofstream out(argv[1], std::ios::binary);
-  Zip::Compress c(out, true);
+  Compress c(out, true);
   
   for (int i = 2; i < argc; i++)
   {
-    Filesystem::File f(argv[i]);
+    File f(argv[i]);
     if (f.exists())
     {
-      Filesystem::Path p(f.path());
+      Path p(f.path());
       if (f.isDirectory())
       {
         std::cout << "Ignore directory " << f.path() << std::endl;

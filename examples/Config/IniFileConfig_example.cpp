@@ -2,15 +2,15 @@
 
 #include <string>
 #include "Config/IniFileConfiguration.h"
+#include "Core/AutoPtr.h"
 #include <iostream>
-#include <Poco/AutoPtr.h>
 
 using namespace SquidKit::Config;
-using Poco::AutoPtr;
+using namespace SquidKit::Core;
 
 int main()
 {
-    Poco::AutoPtr<IniFileConfiguration> pConf(new IniFileConfiguration("test.ini"));
+    AutoPtr<IniFileConfiguration> pConf(new IniFileConfiguration("test.ini"));
 
     // Get string value from configuration
     std::string path = pConf->getString("MyApplication.somePath");

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Debugger.h>
 
 namespace SquidKit::Core {
-  using Debugger = ;
+  using Debugger = Poco::Debugger;
 }

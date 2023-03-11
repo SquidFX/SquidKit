@@ -32,5 +32,10 @@
 #include <Poco/File.h>
 
 namespace SquidKit::Filesystem {
-  using File = Poco::File;
-}
+
+   class File : public Poco::File {
+   public:
+      using Poco::File::File;
+   };
+
+} // namespace SquidKit::Filesystem

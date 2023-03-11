@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Array.h>
 
 namespace SquidKit::Core {
-  using Array = ;
+  using Array = Poco::Array;
 }

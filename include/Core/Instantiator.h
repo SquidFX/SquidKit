@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Instantiator.h>
 
 namespace SquidKit::Core {
-  using Instantiator = ;
+  using Instantiator = Poco::Instantiator;
 }

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Buffer.h>
 
 namespace SquidKit::Core {
-  using Buffer = ;
+  using Buffer = Poco::Buffer;
 }

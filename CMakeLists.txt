@@ -1,50 +1,133 @@
+ #####                         #    #         
+#     #  ####  #    # # #####  #   #  # ##### 
+#       #    # #    # # #    # #  #   #   #   
+ #####  #    # #    # # #    # ###    #   #   
+      # #  # # #    # # #    # #  #   #   #   
+#     # #   #  #    # # #    # #   #  #   #   
+ #####   ### #  ####  # #####  #    # #   #   
+
+
 cmake_minimum_required(VERSION 3.24)
 project(SquidKit)
+
+
+
+option(USE_CLANG            "Build with Clang"      ON)
+option(USE_CLANGXX          "Build with Clang++"    ON)
+option(USE_LDD              "Use ldd for linking"   ON)
+option(USE_LIBCPP           "Use libc++"            ON)
+
+if (USE_CLANG)
+  set(CMAKE_C_COMPILER "clang")
+endif()
+
+if (USE_CLANGXX)
+  set(CMAKE_CXX_COMPILER "clang++")
+endif()
+
+if (USE_LDD)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=ldd")
+endif()
+
+if (USE_LIBCPP)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_LIBRARY_ARCHITECTURE "x86_64-linux-gnu")
 
+
+
 include(ExternalProject)
 
-# Investigating
-# https://github.com/michaelrsweet/pappl | PAPPL - Printer Application Framework
-# https://github.com/nayuki/QR-Code-generator | QR Code generator
+# Individual options
+option(C_Compiler       "llvm"              OFF) # Not building correctly
+set_property(CACHE      C_Compiler  PROPERTY ADVANCED ON)
+
+option(Build_Generator  "cmake"             OFF)
+option(Build_System     "ninja"             OFF)
+option(BUILD_LIBARCHIVE "libarchive"        OFF) # Compile errors
+option(BUILD_RTAUDIO    "rtAudio"           OFF)
+option(BUILD_STK        "stk"               OFF)
+option(BUILD_RTMIDI     "rtMidi"            OFF)
+option(BUILD_LABSOUND   "labsound"          OFF)
+option(BUILD_LIBNYQUIST "libnyquist"        OFF)
+option(BUILD_FLAC       "flac"              OFF)
+option(BUILD_VORBIS     "vorbis"            OFF)
+option(BUILD_OPUS       "opus"              OFF)
+option(BUILD_AWS        "aws-sdk"           OFF)
+option(BUILD_AZURE      "azure-sdk"         OFF)
+option(BUILD_GOOGLE     "google-cloud-sdk"  OFF)
+option(BUILD_POCO       "poco"              OFF)
+option(BUILD_BOOST      "boost"             OFF)
+option(BUILD_FMT        "fmt"               OFF)
+option(BUILD_CLI        "cli"               OFF)
+option(BUILD_REDIS      "redis"             OFF)
+option(BUILD_POSTGRESQL "postgresql"        OFF)
+option(BUILD_SQLITE     "sqlite"            OFF)
+option(BUILD_LEVELDB    "leveldb"           OFF)
+option(BUILD_MCACHED    "memcached"         OFF)
+option(BUILD_LMDB       "lmdb"              OFF)
+option(BUILD_ARANGODB   "arangodb"          OFF)
+option(BUILD_SKIA       "skia"              ON)
+option(BUILD_OIIO       "openimageio"       OFF)
+option(BUILD_BOX2D      "box2d"             OFF)
+option(BUILD_YOGA       "yoga"              ON)
+option(BUILD_VSG        "vulkanscenegraph"  OFF)
+option(BUILD_PCL        "pcl"               OFF)
+option(BUILD_TASK       "taskflow"          OFF)
+option(BUILD_THRUST     "thrust"            OFF)
+option(BUILD_LIBOSMIUM  "libosmium"         OFF)
+option(BUILD_GDAL       "gdal"              OFF)
+option(BUILD_OSRM       "osrm"              OFF) 
+
+# Group options
+option(Enable_Tools     "Enable tools"      OFF)
+if(Enable_Tools)
+    set(C_Compiler        "llvm"        CACHE STRING "C compiler")
+    set(Build_Generator   "cmake"       CACHE STRING "Build generator")
+    set(Build_System      "ninja"       CACHE STRING "Build system")
+endif()    
+
+option(Enable_Database  "Enable database"    OFF)
+if(Enable_Database)
+    set(BUILD_REDIS      "redis"        CACHE STRING "Redis Database")
+    set(BUILD_POSTGRESQL "postgresql"   CACHE STRING "PostgreSQL Database")
+    set(BUILD_SQLITE     "sqlite"       CACHE STRING "SQLite Database")
+    set(BUILD_LEVELDB    "leveldb"      CACHE STRING "")
+    set(BUILD_MCACHED    "memcached"    CACHE STRING "")
+    set(BUILD_LMDB       "lmdb"         CACHE STRING "")
+    set(BUILD_ARANGODB   "arangodb"     CACHE STRING "")
+endif()   
 
 
-# Multimedia        | libvlc
-# Video             | libvpx, libwebm
-# Image             | libpng, libjpeg, openexr, webp
-# Machine Learning  | tensorflow
-# Cryptogrophy      | openssl
-# Web               | cef3
-# Markup            | yaml, libxml, expat
-# Configuration     | toml
-# Audio             | libflac, libogg, libopis, libvorbis, clap sdk...
-# Graphics3D        | Physx, opensubd, openvdb, ...
-# https://github.com/NVIDIA-Omniverse/PhysX
-
-# Arcive            / zlib
-# Font              | freetype, fontconfig? harfbuzz, icu?
-
-
-
-# Tools
-# --------------------
-option(C_Compiler "Build LLVM Compiler Collection" OFF)
+# LLVM
 if(C_Compiler)
 # LLVM is a collection of modular and reusable compiler and toolchain technologies, written in C++ and 
 # designed for a wide range of programming languages. 
 # License: Apache 2.0
 ExternalProject_Add(
     llvm
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/llvm
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/llvm
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/llvm/src/llvm/llvm
     GIT_REPOSITORY https://github.com/llvm/llvm-project.git
-    GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/tools
+    GIT_TAG main
+    CMAKE_ARGS  
+      -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra
+      -DLLVM_ENABLE_LLD=ON
+      -DLLVM_ENABLE_LIBCXX=ON
+      -DLLVM_ENABLE_LIBCXXABI=ON
+      -DLLVM_BUILD_LLVM_DYLIB=ON
+      -DLLVM_ENABLE_RTTI=ON
+      -DLLVM_TARGETS_TO_BUILD=X86
+      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+      -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/tools
 )
 endif()
 
-option(Build_Generator "Build CMake" OFF)
+
+
+# CMAKE
 if(Build_Generator)
 # CMake is a cross-platform build system generator that allows developers to specify the build process for 
 # their C++ projects in a platform-independent way. It uses a simple scripting language called CMake Language 
@@ -59,7 +142,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(Build_System "Build Ninja Build System" OFF)
+
+
+# Ninja
 if(Build_System)
 # Ninja is a build system that is designed to be fast, flexible, and easy to use. It is commonly used in software 
 # development to automate the building of software projects, especially large projects with many dependencies.
@@ -75,11 +160,25 @@ endif()
 
 
 
+# Test
+option(Build_TEST "TEST Project" OFF)
+if(Build_TEST)
+#
+#
+ExternalProject_Add(
+    test
+    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/test
+    GIT_REPOSITORY https://github.com/myusername/myexternalproject.git
+    GIT_TAG master
+    CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/thirdparty/src/myexternalproject/configure --prefix=${CMAKE_BINARY_DIR}/thirdparty/install
+    BUILD_COMMAND make
+    INSTALL_COMMAND make install
+)
+endif()
 
 
-# Archive & Compression
-# --------------------
-option(BUILD_LIBARCHIVE "Archive & Compression | Advance Support) " OFF)
+
+# Libarchive
 if(BUILD_LIBARCHIVE)
 # Libarchive is a C library that provides a flexible and powerful interface for reading 
 # and writing archive files, such as tar and zip files. It is designed to support a wide 
@@ -97,11 +196,7 @@ endif()
 
 
 
-
-
-# Audio Module
-# --------------------
-option(BUILD_RTAUDIO "Audio | Advance Realtime Audio Support) " OFF)
+# RtAudio
 if(BUILD_RTAUDIO)
 # RtAudio is a C++ library that provides a cross-platform interface for 
 # real-time audio input and output. It supports multiple audio API backends, 
@@ -117,7 +212,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_STK "Audio | Synthesis Toolkit Support) " OFF)
+
+
+# STK
 if(BUILD_STK)
 # STK (Synthesis ToolKit in C++) is a C++ library designed for creating 
 # and manipulating digital audio signals. It provides a wide range of 
@@ -133,7 +230,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_RTMIDI "Audio | Midi Support) " OFF)
+
+
+# RtMidi
 if(BUILD_RTMIDI)
 # RtMidi is a C++ library that provides a simple and cross-platform interface 
 # for working with MIDI (Musical Instrument Digital Interface) devices. It allows 
@@ -149,7 +248,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_LABSOUND "Audio | Graph-Based Audio Engine) " OFF)
+
+
+# LabSound
 if(BUILD_LABSOUND)
 # LabSound is an open-source C++ library for audio processing that was developed by 
 # Google and is now maintained by a community of contributors on GitHub. It provides 
@@ -170,7 +271,9 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_LIBNYQUIST "Audio | Graph-Based Audio Engine) " OFF)
+
+
+# Libnyquist
 if(BUILD_LIBNYQUIST)
 # Libnyquist is an open-source C++ library for audio processing that was developed by 
 # Google and is now maintained by a community of contributors on GitHub. It provides 
@@ -191,7 +294,9 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_FLAC "Audio | Flac Audio Codec) " OFF)
+
+
+# Flac
 if(BUILD_FLAC)
 # FLAC is a software library that provides an API for encoding and decoding audio data in 
 # the FLAC (Free Lossless Audio Codec) format. FLAC is an open-source lossless audio compression 
@@ -207,7 +312,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_VORBIS "Audio | Vorbis Audio Codec) " OFF)
+
+
+# Vorbis
 if(BUILD_VORBIS)
 # Vorbis is an open-source audio compression format that is designed to provide high-quality, 
 # low-latency audio compression at a low bit rate. It was created as an alternative to other 
@@ -223,7 +330,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_OPUS "Audio | Opus Audio Codec) " OFF)
+
+
+# Opus
 if(BUILD_OPUS)
 # Opus is a totally open, royalty-free, highly versatile audio codec. Opus is unmatched for 
 # interactive speech and music transmission over the Internet, but is also intended for storage 
@@ -240,9 +349,7 @@ endif()
 
 
 
-#Cloud
-# --------------------
-option(BUILD_AWS "Cloud Frameworks | Amazon AWS SDK) " OFF)
+# AWS
 if(BUILD_AWS)
 # AWS SDK for C++ is a C++ software development kit that provides a modern and streamlined 
 # interface for developers to interact with Amazon Web Services (AWS) services, such as 
@@ -257,7 +364,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_AZURE "Cloud Frameworks | Microsoft Azure SDK) " OFF)
+
+
+# Azure
 if(BUILD_AZURE)
 # Azure SDK for C++ is a C++ library that provides a set of APIs for accessing and 
 # interacting with various Azure services. It includes modules for working with Azure 
@@ -272,7 +381,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_GOOGLE "Cloud Frameworks | Google Cloud SDK) " OFF)
+
+
+# Google
 if(BUILD_GOOGLE)
 # The Google Cloud SDK a set of tools and libraries that enable developers to manage and 
 # deploy their applications on GCP. With the Google Cloud SDK, developers can interact with 
@@ -289,11 +400,7 @@ endif()
 
 
 
-
-
-# Core C++ Toolkits
-# --------------------
-option(BUILD_POCO "Core | Basic C++ Framework) " ON)
+# Poco
 if(BUILD_POCO)
 # Poco is a C++ libraries and frameworks collection that provides a variety of useful components 
 # and tools for building network-centric, portable, and scalable applications. The Poco libraries 
@@ -302,10 +409,10 @@ if(BUILD_POCO)
 
 ExternalProject_Add(
     poco
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/poco
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/poco
     GIT_REPOSITORY https://github.com/pocoproject/poco.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install 
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
     -DENABLE_ACTIVERECORD=OFF 
     -DENABLE_ACTIVERECORD_COMPILER=OFF 
     -DENABLE_APACHECONNECTOR=OFF 
@@ -341,7 +448,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_BOOST "Core | Advance C++ Framework) " OFF)
+
+
+# Boost
 if(BUILD_BOOST)
 # Boost is a widely-used set of C++ libraries that provides a broad range of functionality for 
 # developing high-quality software applications. The Boost libraries cover a wide range of areas 
@@ -349,14 +458,16 @@ if(BUILD_BOOST)
 # License: Boost Software License 1.0
 ExternalProject_Add(
     boost
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/boost
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/boost
     GIT_REPOSITORY https://github.com/boostorg/boost.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
-option(BUILD_FMT "Core | Formating Library) " OFF)
+
+
+# FMT
 if(BUILD_FMT)
 # 
 # License: MIT
@@ -369,7 +480,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_CLI "Core | Commandline Interface Library) " OFF)
+
+
+# Cli
 if(BUILD_CLI)
 # A cross-platform header only C++14 library for interactive command line interfaces (Cisco style)
 # License: Boost Software License 1.0
@@ -383,25 +496,23 @@ ExternalProject_Add(
 endif()
 
 
-# Machine Learning Frameworks
 
-
-# Parallel Programming
-# --------------------------
-option(BUILD_TASK "Parallel Programming | Parallel and Heterogeneous Task Programming System) " OFF)
+# Task
 if(BUILD_TASK)
 # A General-purpose Parallel and Heterogeneous Task Programming System.
 # License: MIT
 ExternalProject_Add(
     task
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/task
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/task
     GIT_REPOSITORY https://github.com/taskflow/taskflow.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
-option(BUILD_THRUST "Parallel Programming | Parallel Algorithms Library Resembling the C++ STL) " OFF)
+
+
+# Thrust
 if(BUILD_THRUST)
 # Thrust is a parallel algorithms library which resembles the C++ Standard Template Library (STL). 
 # Thrust’s high-level interface greatly enhances programmer productivity while enabling performance 
@@ -409,42 +520,16 @@ if(BUILD_THRUST)
 # License: Apache 2.0
 ExternalProject_Add(
     thrust
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/thrust
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/thrust
     GIT_REPOSITORY https://github.com/NVIDIA/thrust.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
-)
-endif()
-
-option(BUILD_ARRAYFIRE "Parallel Programming | General-Purpose Tensor Library) " OFF)
-if(BUILD_ARRAYFIRE)
-# ArrayFire is a general-purpose tensor library that simplifies the process of software development 
-# for the parallel architectures found in CPUs, GPUs, and other hardware acceleration devices. The 
-# library serves users in every technical computing market. 
-# License: BSD 3-Cause
-ExternalProject_Add(
-    arrayfire
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/arrayfire
-    GIT_REPOSITORY https://github.com/arrayfire/arrayfire.git
-    GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
 
 
-
-
-
-
-
-
-
-
-
-# Database
-# --------------------
-option(BUILD_REDIS "Database | Redis Database) " OFF)
+# Redis
 if(BUILD_REDIS)
 # Redis is an open-source, in-memory data structure store that is used as a database, 
 # cache, and message broker. 
@@ -462,7 +547,9 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_POSTGRESQL "Database | PostgreSQL Database) " OFF)
+
+
+# PostgreSQL
 if(BUILD_POSTGRESQL)
 # PostgreSQL, often referred to simply as "Postgres," is a powerful open-source relational database management 
 # system (RDBMS) that was first released in 1989. It is designed to be highly reliable, scalable, and flexible, 
@@ -482,8 +569,10 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_POSTGRESQL "Database | SQLite Database) " OFF)
-if(BUILD_POSTGRESQL)
+
+
+# Sqlite
+if(BUILD_SQLITE)
 # SQLite is a free, open-source, serverless relational database management system (RDBMS) that is widely 
 # used in many different types of applications, including web browsers, mobile devices, and desktop software. 
 # License: Public Domain
@@ -500,7 +589,9 @@ ExternalProject_Add(
     endif()
 endif()
 
-option(BUILD_LEVELDB "Database | LevelDB Database) " OFF)
+
+
+# LevelDB
 if(BUILD_LEVELDB)
 # LevelDB is an open-source, key-value store database that was developed by Google. It is 
 # designed to be fast, efficient, and scalable, and is widely used in many different types 
@@ -515,7 +606,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_MCACHED "Database | Memcached Database) " OFF)
+
+
+# Memcached
 if(BUILD_MCACHED)
 # Memcached is a distributed caching system that is designed to accelerate dynamic web 
 # applications by reducing database load.
@@ -529,7 +622,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_LMDB "Database | LMDB Database) " OFF)
+
+
+# LMDB
 if(BUILD_LMDB)
 # LMDB (Lightning Memory-Mapped Database) is a high-performance, transactional, key-value 
 # store database that was developed by Symas Corporation.
@@ -543,7 +638,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_ARANGODB "Database | ArangoDB Database) " OFF)
+
+
+# ArangoDB
 if(BUILD_ARANGODB)
 # ArangoDB is a native multi-model database with flexible data models for documents, 
 # graphs, and key-values. Build high performance applications using a convenient SQL-like 
@@ -560,17 +657,74 @@ endif()
 
 
 
+# Skia
+if(BUILD_SKIA)
+  # Clone depot_tools using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/depot_tools
+    COMMAND git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src
+  )
+  add_custom_target(depot_tools_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/depot_tools)
+
+  # Add depot_tools to path
+  set(PATH "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/depot_tools:$ENV{PATH}" CACHE INTERNAL "")
+
+  # Clone Skia repository using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+    COMMAND git clone https://skia.googlesource.com/skia.git
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src
+  )
+  add_custom_target(skia_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia)
+
+  # Sync dependencies using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/.deps
+    COMMAND python3 tools/git-sync-deps
+    DEPENDS skia_target
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+  )
+  add_custom_target(sync_deps_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/.deps)
+
+  # Fetch Ninja using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/bin/ninja
+    COMMAND python3 tools/git-sync-deps
+    DEPENDS sync_deps_target
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+  )
+  add_custom_target(fetch_ninja_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/bin/ninja)
+
+  # Generate build files with GN using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static
+    COMMAND bin/gn gen out/Static
+    DEPENDS fetch_ninja_target
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+  )
+  add_custom_target(generate_build_files_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static)
+
+  # Build with Ninja using add_custom_command and add_custom_target
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a
+    COMMAND ninja -C out/Static
+    DEPENDS generate_build_files_target
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+  )
+  add_custom_target(build_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a)
+
+  # Install Skia libraries and include files
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/
+          DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/lib)
+
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/include/
+          DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/include)
+endif()
 
 
 
-
-
-
-
-
-# Graphics2D
-# --------------------
-option(BUILD_OIIO "Graphics2D | Advance Image Support) " OFF)
+# OIIO
 if(BUILD_OIIO)
 # OpenImageIO is a C++ library that provides a simple and powerful interface for 
 # reading and writing image files. It is designed to support a wide range of image 
@@ -586,7 +740,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_BOX2D "Graphics2D | 2D Physics Support) " OFF)
+
+
+# Box2D
 if(BUILD_BOX2D)
 # Box2D is a C++ physics engine library that is designed to simulate 2D rigid-body 
 # physics. It is commonly used in video games and other interactive applications to 
@@ -602,7 +758,8 @@ ExternalProject_Add(
 endif()
 
 
-option(BUILD_YOGA "Graphics2D | Flexbox, Grid, ... Layout Library) " OFF)
+
+# Yoga
 if(BUILD_YOGA)
 # 
 # License: MIT
@@ -610,16 +767,14 @@ ExternalProject_Add(
     yoga
     PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/yoga
     GIT_REPOSITORY https://github.com/facebook/yoga.git
-    GIT_TAG master
+    GIT_TAG main
     CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
 )
 endif()
 
 
 
-# Graphics3D
-# --------------------
-option(BUILD_VSG "Gui | Window Management, Input Handeling, 2D & 3D Graphics) " OFF)
+# VulkanScenegraph
 if(BUILD_VSG)
 # 
 # License: MIT
@@ -632,7 +787,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_PCL "Graphics3D | Point Cloud Library) " OFF)
+
+
+# Point Cloude Library
 if(BUILD_PCL)
 # 
 # License: BSD
@@ -646,9 +803,8 @@ ExternalProject_Add(
 endif()
 
 
-# Maps & Navigation
-# --------------------
-option(BUILD_LIBOSMIUM "Maps | Basic OpenStreetMap Support) " OFF)
+
+# Libosmium
 if(BUILD_LIBOSMIUM)
 # Libosmium is a C++ library for working with OpenStreetMap data. 
 # It provides tools for reading, writing, and manipulating OSM data 
@@ -663,7 +819,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_GDAL "Maps | Advance Vector & Raster Geospatial Support) " OFF)
+
+
+# GDAL
 if(BUILD_GDAL)
 # GDAL is a C++ library for reading, writing, and manipulating raster 
 # and vector geospatial data. It supports a wide variety of file formats 
@@ -679,7 +837,9 @@ ExternalProject_Add(
 )
 endif()
 
-option(BUILD_OSRM "Maps | Advance OpenStreetMap Routing Support) " OFF)
+
+
+# OSRM
 if(BUILD_OSRM)
 # OSRM is a C++ library for routing on OpenStreetMap data. It provides tools 
 # for calculating shortest paths and travel times between points on a map, as 
@@ -693,20 +853,3 @@ ExternalProject_Add(
     CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
 )
 endif()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

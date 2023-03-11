@@ -29,8 +29,9 @@
 
 #pragma once
 
-#include <>
+#include <Poco/TypeList.h>
 
 namespace SquidKit::Core {
-  using Getter = ;
+  template <int n>
+  using Getter = Poco::TypeGetter<n>;
 }

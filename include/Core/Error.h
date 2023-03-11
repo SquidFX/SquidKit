@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <>
+#include <Poco/Error.h>
 
 namespace SquidKit::Core {
-  using Error = ;
+  using Error = Poco::Error;
 }
