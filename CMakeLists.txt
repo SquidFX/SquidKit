@@ -40,16 +40,21 @@ set(CMAKE_LIBRARY_ARCHITECTURE "x86_64-linux-gnu")
 
 include(ExternalProject)
 
-# Individual options
+# Individual options | Note these are only visable in ccmake advance mode.
 option(C_Compiler       "llvm"              OFF) # Not building correctly
 set_property(CACHE      C_Compiler  PROPERTY ADVANCED ON)
 
 option(Build_Generator  "cmake"             OFF)
+set_property(CACHE      Build_Generator PROPERTY ADVANCED ON)
+
 option(Build_System     "ninja"             OFF)
+set_property(CACHE      Build_System PROPERTY ADVANCED ON)
+
 option(BUILD_LIBARCHIVE "libarchive"        OFF) # Compile errors
-option(BUILD_RTAUDIO    "rtAudio"           OFF)
-option(BUILD_STK        "stk"               OFF)
-option(BUILD_RTMIDI     "rtMidi"            OFF)
+option(BUILD_RTAUDIO    "rtAudio"           ON)
+option(BUILD_STK        "stk"               ON)
+option(BUILD_NNG        "nng"               ON)
+option(BUILD_RTMIDI     "rtMidi"            ON)
 option(BUILD_LABSOUND   "labsound"          OFF)
 option(BUILD_LIBNYQUIST "libnyquist"        OFF)
 option(BUILD_FLAC       "flac"              OFF)
@@ -59,7 +64,7 @@ option(BUILD_AWS        "aws-sdk"           OFF)
 option(BUILD_AZURE      "azure-sdk"         OFF)
 option(BUILD_GOOGLE     "google-cloud-sdk"  OFF)
 option(BUILD_POCO       "poco"              OFF)
-option(BUILD_BOOST      "boost"             OFF)
+option(BUILD_BOOST      "boost"             ON)
 option(BUILD_FMT        "fmt"               OFF)
 option(BUILD_CLI        "cli"               OFF)
 option(BUILD_REDIS      "redis"             OFF)
@@ -80,6 +85,7 @@ option(BUILD_THRUST     "thrust"            OFF)
 option(BUILD_LIBOSMIUM  "libosmium"         OFF)
 option(BUILD_GDAL       "gdal"              OFF)
 option(BUILD_OSRM       "osrm"              OFF) 
+option(BUILD_SFML       "sfml"              ON) 
 
 # Group options
 option(Enable_Tools     "Enable tools"      OFF)
@@ -144,6 +150,21 @@ endif()
 
 
 
+# CMAKE
+if(BUILD_SFML)
+#  
+# License: BSD 3-Clause
+ExternalProject_Add(
+    sfml
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/sfml
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.5.1
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
+)
+endif()
+
+
+
 # Ninja
 if(Build_System)
 # Ninja is a build system that is designed to be fast, flexible, and easy to use. It is commonly used in software 
@@ -196,6 +217,21 @@ endif()
 
 
 
+# nng
+if(BUILD_NNG)
+# Nanomsg Next Generation (nng) is a high-performance messaging system for building distributed and scalable applications.
+# License: MIT
+ExternalProject_Add(
+    nng
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/nng
+    GIT_REPOSITORY https://github.com/nanomsg/nng.git
+    GIT_TAG v1.5.2
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
+)
+endif()
+
+
+
 # RtAudio
 if(BUILD_RTAUDIO)
 # RtAudio is a C++ library that provides a cross-platform interface for 
@@ -205,10 +241,10 @@ if(BUILD_RTAUDIO)
 # License: MIT
 ExternalProject_Add(
     rtaudio
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/rtaudio
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/rtaudio
     GIT_REPOSITORY https://github.com/thestk/rtaudio.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
@@ -223,10 +259,10 @@ if(BUILD_STK)
 # License: MIT
 ExternalProject_Add(
     stk
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/stk
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/stk
     GIT_REPOSITORY https://github.com/thestk/stk.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
@@ -241,10 +277,10 @@ if(BUILD_RTMIDI)
 # License: MIT
 ExternalProject_Add(
     rtmidi
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/rtmidi
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/rtmidi
     GIT_REPOSITORY https://github.com/thestk/rtmidi.git
     GIT_TAG master
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
@@ -705,21 +741,24 @@ if(BUILD_SKIA)
   )
   add_custom_target(generate_build_files_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static)
 
-  # Build with Ninja using add_custom_command and add_custom_target
-  add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a
-    COMMAND ninja -C out/Static
-    DEPENDS generate_build_files_target
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
-  )
-  add_custom_target(build_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a)
+ # Build with Ninja using add_custom_command and add_custom_target
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a
+  COMMAND ninja -C out/Static
+  DEPENDS generate_build_files_target
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia
+)
+add_custom_target(build_target ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/libskia.a)
 
-  # Install Skia libraries and include files
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/
-          DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/lib)
+# Install Skia libraries and include files
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/out/Static/
+        COMPONENT static_libraries
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/lib
+        FILES_MATCHING PATTERN "*.a")
 
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/include/
-          DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/include)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/skia/include/
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install/include)
+
 endif()
 
 
@@ -765,10 +804,10 @@ if(BUILD_YOGA)
 # License: MIT
 ExternalProject_Add(
     yoga
-    PREFIX ${CMAKE_BINARY_DIR}/thirdparty/src/yoga
+    PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/src/yoga
     GIT_REPOSITORY https://github.com/facebook/yoga.git
     GIT_TAG main
-    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty/install
+    CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/install
 )
 endif()
 
