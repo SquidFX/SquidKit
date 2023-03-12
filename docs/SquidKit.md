@@ -1,8 +1,7 @@
-<img src="/home/stevenstarr/Downloads/logo.jpeg" alt="logo" style="zoom:25%;" />
 
 ## SquidKit Development Process
 
-![test.drawio](/home/stevenstarr/Downloads/test.drawio.png)
+![test.drawio](images/test.drawio.png)
 
 
 
