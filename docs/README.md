@@ -207,3 +207,24 @@ One of the advantages of using the LRUCache class is that it can significantly i
 
 
 ### Config Module
+
+### Core Module
+
+#### Array
+#### Ascii
+#### AtomicCounter
+#### AutoPtr
+#### Buffer
+#### Checksum
+#### Debugger
+#### Environment
+#### Error
+#### IsConst
+#### IsReference
+#### Nullable
+#### NumberFormatter
+#### NumberParser
+#### Optional
+#### SharedPtr
+#### StringTokenizer
+#### 
